@@ -1,0 +1,14 @@
+<ons-toolbar>
+    <div class="left"><ons-back-button>Назад</ons-back-button></div>
+    <div class="center">
+        {{ category ? category.title : 'Создание категории' }}
+    </div>
+</ons-toolbar>
+<div class="content">
+    <div style="text-align: center; margin: 10px">
+        <ons-input placeholder="Название категории" [(value)]="model.title"></ons-input>
+    </div>
+</div>
+<ons-bottom-toolbar>
+    <ons-button modifier="large" (click)="save()">Сохранить</ons-button>
+</ons-bottom-toolbar>
