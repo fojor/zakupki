@@ -5,7 +5,7 @@
     <div class="center">{{ currentCategory?.title }}</div>
     <div class="right">
         <ons-toolbar-button>
-            <ons-icon icon="fa-edit"></ons-icon>
+            <ons-icon icon="fa-edit" (click)="editCategory(currentCategory)"></ons-icon>
         </ons-toolbar-button>
     </div>
 </ons-toolbar>
@@ -34,7 +34,7 @@
         <ons-speed-dial-item>
             <ons-icon icon="fa-file"></ons-icon>
         </ons-speed-dial-item>
-        <ons-speed-dial-item (click)="editCategory()">
+        <ons-speed-dial-item (click)="createCategory()">
             <ons-icon icon="fa-folder"></ons-icon>
         </ons-speed-dial-item>
     </ons-speed-dial>

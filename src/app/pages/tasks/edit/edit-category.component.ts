@@ -31,6 +31,7 @@ export class EditCategoryComponent {
         }
         else {
             this.model = new TaskCategory();
+            this.model.parentId = this.params.data.parentId;
         }
     }
 
@@ -40,10 +41,11 @@ export class EditCategoryComponent {
         }
         else {
             this.store.dispatch(new AddCategoryAction(this.model));
-            this.store.dispatch(new OpenCategoryPageAction({
-                navigator: this.navigator, 
-                data: { category: this.model }
-            }));
+            // this.store.dispatch(new OpenCategoryPageAction({
+            //     navigator: this.navigator, 
+            //     data: { category: this.model }
+            // }));
         }
+        this.navigator.element.popPage();
     }
 }

@@ -10,7 +10,7 @@ import { TasksState } from '../../../redux/app.state';
 import { OpenCategoryPageAction, OpenEditCategoryPageAction, OpenEditTaskPageAction } from '../../../redux/actions/navigation.actions';
 import { TaskItem } from '../../../models/task-item';
 import { Observable, from } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, subscribeOn } from 'rxjs/operators';
 import { getCaregories } from '../../../redux/selectors/tasks.selector';
 
 @Component({
@@ -39,7 +39,13 @@ export class TasksListComponent {
                 map(value => value.filter(i => this.currentCategory ? i.parentId === this.currentCategory.id : !i.parentId))
             );
 
-                
+        this.store.pipe(
+            select(getCaregories)
+        ).subscribe(value => {
+            if(this.currentCategory) {
+                this.currentCategory = value.find(i => i.id === this.currentCategory.id)
+            }
+        });                
     }
 
     ngAfterContentInit() {
@@ -63,13 +69,17 @@ export class TasksListComponent {
     }
 
     createCategory() {
-        this.editCategory(null);
+        let payload = {
+            navigator: this.navigator, 
+            data: { parentId: this.currentCategory && this.currentCategory.id }
+        };
+        this.store.dispatch(new OpenEditCategoryPageAction(payload));
     }
 
     editCategory(category: TaskCategory) {
         let payload = {
             navigator: this.navigator, 
-            data: category
+            data: { category }
         };
         this.store.dispatch(new OpenEditCategoryPageAction(payload));
     }
