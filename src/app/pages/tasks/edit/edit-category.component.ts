@@ -31,6 +31,7 @@ export class EditCategoryComponent {
         }
         else {
             this.model = new TaskCategory();
+            this.model.title = '';
             this.model.parentId = this.params.data.parentId;
         }
     }

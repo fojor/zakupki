@@ -1,13 +1,16 @@
 <ons-toolbar>
     <div class="left"><ons-back-button>Назад</ons-back-button></div>
     <div class="center">
-        {{ category ? category.title : 'Создание категории' }}
+        {{ category ? 'Изменить категорию' : 'Создать категорию' }}
     </div>
 </ons-toolbar>
 <div class="content">
-    <div style="text-align: center; margin: 10px">
-        <ons-input placeholder="Название категории" [(value)]="model.title"></ons-input>
-    </div>
+    <ons-list modifier="inset" class="form-list">
+        <ons-list-header>Название категории</ons-list-header>
+        <ons-list-item>
+            <ons-input placeholder="Название категории" [(value)]="model.title" class="form-list-input"></ons-input>
+        </ons-list-item>
+    </ons-list>
 </div>
 <ons-bottom-toolbar>
     <ons-button modifier="large" (click)="save()">Сохранить</ons-button>

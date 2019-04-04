@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.form-list {
+    margin-top: 30px !important;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .form-list-input {
+        width: 100%;
+    }
+}
+
