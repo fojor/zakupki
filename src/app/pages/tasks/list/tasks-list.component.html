@@ -11,8 +11,8 @@
 </ons-toolbar>
 
 <div class="content">
-    <ons-list>
-        <ons-list-item *ngFor="let category of categories$ | async" (click)="openCategory(category)">
+    <ons-list *ngIf="model$ | async as model">
+        <ons-list-item *ngFor="let category of model.categories" (click)="openCategory(category)">
             <div class="left">
                 <ons-icon icon="fa-folder" size="36px"></ons-icon>
             </div>
@@ -21,9 +21,14 @@
                 <span class="list-item__subtitle">On the Internet</span>
             </div>
         </ons-list-item>
-        <ons-list-item *ngFor="let task of tasks$ | async">
-            <ons-checkbox class="form-control left"></ons-checkbox>
-            <div class="center" (click)="editTask(task)">{{ task.title }}</div>
+        <ons-list-item *ngFor="let task of model.tasks">
+            <div class="left">
+                <ons-checkbox class="form-control left"></ons-checkbox>
+            </div>
+            <div class="center">
+                <span class="list-item__title" (click)="editTask(task)">{{ task.title }}</span>
+                <span class="list-item__subtitle">{{ task.description }}</span>
+            </div>
         </ons-list-item>
     </ons-list>
 

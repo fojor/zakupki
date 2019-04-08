@@ -11,7 +11,7 @@ import { OpenCategoryPageAction, OpenEditCategoryPageAction, OpenEditTaskPageAct
 import { TaskItem } from '../../../models/task-item';
 import { Observable, from } from 'rxjs';
 import { filter, map, subscribeOn } from 'rxjs/operators';
-import { getCaregories, getTasks } from '../../../redux/selectors/tasks.selector';
+import { TasksListViewModel, tasksListViewModel } from '../../../redux/selectors/tasks.selector';
 
 @Component({
     selector: 'ons-page',
@@ -24,8 +24,7 @@ export class TasksListComponent {
     toolbar: any;
 
     currentCategory: TaskCategory;
-    categories$: Observable<TaskCategory[]>;
-    tasks$: Observable<TaskItem[]>;
+    model$: Observable<TasksListViewModel>;
 
     constructor(
         private navigator: OnsNavigator,
@@ -34,25 +33,12 @@ export class TasksListComponent {
     ) {
         this.currentCategory = this.params.data.category;
 
-        this.categories$ = this.store
-            .pipe(
-                select(getCaregories),
-                map(value => value.filter(i => this.currentCategory ? i.parentId === this.currentCategory.id : !i.parentId))
-            );
+        this.model$ = this.store.select(tasksListViewModel(this.currentCategory && this.currentCategory.id));
 
-        this.tasks$ = this.store
-            .pipe(
-                select(getTasks),
-                map(value => value.filter(i => this.currentCategory ? i.categoryId === this.currentCategory.id : !i.categoryId))
-            );
-
-        this.store
-            .pipe(
-                select(getCaregories)
-            )
-            .subscribe(value => {
-                if(this.currentCategory) {
-                    this.currentCategory = value.find(i => i.id === this.currentCategory.id)
+        this.model$
+            .subscribe((value: TasksListViewModel) => {
+                if(value.current) {
+                    this.currentCategory = value.current
                 }
             });                
     }

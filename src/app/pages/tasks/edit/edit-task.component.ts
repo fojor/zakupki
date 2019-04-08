@@ -28,7 +28,6 @@ export class EditTaskComponent {
         }
         else {
             this.model = new TaskItem();
-            this.model.title = '';
             this.model.categoryId = this.params.data.categoryId;
         }
     }
