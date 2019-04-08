@@ -9,8 +9,8 @@ import { Store, select } from '@ngrx/store';
 import { TasksState } from '../../../redux/app.state';
 import { OpenCategoryPageAction, OpenEditCategoryPageAction, OpenEditTaskPageAction } from '../../../redux/actions/navigation.actions';
 import { TaskItem } from '../../../models/task-item';
-import { Observable, from } from 'rxjs';
-import { filter, map, subscribeOn } from 'rxjs/operators';
+import { Observable, from, Subject } from 'rxjs';
+import { filter, map, subscribeOn, takeUntil } from 'rxjs/operators';
 import { TasksListViewModel, tasksListViewModel } from '../../../redux/selectors/tasks.selector';
 
 @Component({
@@ -19,6 +19,7 @@ import { TasksListViewModel, tasksListViewModel } from '../../../redux/selectors
 })
   
 export class TasksListComponent {
+    private destroy$: Subject<void> = new Subject<void>()
 
     @ViewChild('toolbar') 
     toolbar: any;
@@ -36,15 +37,19 @@ export class TasksListComponent {
         this.model$ = this.store.select(tasksListViewModel(this.currentCategory && this.currentCategory.id));
 
         this.model$
+            .pipe(takeUntil(this.destroy$))
             .subscribe((value: TasksListViewModel) => {
-                if(value.current) {
-                    this.currentCategory = value.current
-                }
+                this.currentCategory = value.current
             });                
     }
 
     ngAfterContentInit() {
         this.toolbar.nativeElement.setVisibility(!!this.currentCategory);
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     openCategory(category: TaskCategory) {
