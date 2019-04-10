@@ -5,12 +5,16 @@
     </div>
 </ons-toolbar>
 <div class="content">
-    <ons-list modifier="inset" class="form-list">
-        <ons-list-header>Название категории</ons-list-header>
-        <ons-list-item>
-            <ons-input placeholder="Название категории" [(value)]="model.title" class="form-list-input"></ons-input>
-        </ons-list-item>
-    </ons-list>
+    <ul class="list form-list">
+        <li class="list-item">
+            <div class="list-item__left">
+                <ons-icon icon="fa-folder" class="list-item__icon"></ons-icon>
+            </div>
+            <div class="list-item__center">
+                <ons-input placeholder="Название категории" [(value)]="model.title" class="form-list-input"></ons-input>
+            </div>
+        </li>
+    </ul>
 </div>
 <ons-bottom-toolbar>
     <ons-button modifier="large" (click)="save()">Сохранить</ons-button>
