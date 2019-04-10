@@ -5,18 +5,42 @@
     </div>
 </ons-toolbar>
 <div class="content">
-    <ons-list modifier="inset" class="form-list">
-        <ons-list-header>Заголовок</ons-list-header>
-        <ons-list-item>
-            <ons-input placeholder="Заголовок" [(value)]="model.title" class="form-list-input"></ons-input>
-        </ons-list-item>
-    </ons-list>
-    <ons-list modifier="inset" class="form-list">
-        <ons-list-header>Описание</ons-list-header>
-        <ons-list-item>
-            <ons-input placeholder="Описание" [(value)]="model.description" class="form-list-input"></ons-input>
-        </ons-list-item>
-    </ons-list>
+    <ul class="list form-list">
+        <li class="list-item">
+            <div class="list-item__center">
+                <ons-input [(value)]="model.title" placeholder="Заголовок" class="form-list-input"></ons-input>
+            </div>
+        </li>
+        <li [ngClass]="{ 'expanded': descriptionEnabled }" class="list-item list-item--expandable">
+            <div class="list-item__top">
+                <div class="list-item__left">
+                    Добавить заметку
+                </div>
+                <div class="list-item__right">
+                    <ons-switch [value]="descriptionEnabled" (change)="descriptionEnabled = !descriptionEnabled"></ons-switch>
+                </div>
+            </div>
+            <div class="list-item__expandable-content">
+                <textarea [(value)]="model.description" placeholder="Заметка" class="form-list-textarea textarea textarea--transparent"></textarea>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="list-item__left">
+                Добавить в календарь
+            </div>
+            <div class="list-item__right">
+                <ons-switch></ons-switch>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="list-item__left">
+                Добавить покупки
+            </div>
+            <div class="list-item__right">
+                <ons-switch></ons-switch>
+            </div>
+        </li>
+    </ul>
 </div>
 <ons-bottom-toolbar>
     <ons-button modifier="large" (click)="save()">Сохранить</ons-button>
